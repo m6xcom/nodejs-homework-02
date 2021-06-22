@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const mongoose = require("mongoose");
+const { HttpCodes } = require("../../../helpers/constants");
 
 const schemaCreateContact = Joi.object({
   name: Joi.string().min(3).max(30).required(),
@@ -34,7 +35,7 @@ const validateContact = async (schema, obj, next) => {
     next();
   } catch (err) {
     next({
-      status: 400,
+      status: HttpCodes.BAD_REQUEST,
       message: "missing required field",
     });
   }
@@ -53,7 +54,7 @@ module.exports = {
   validationId: (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.contactId)) {
       return next({
-        status: 400,
+        status: HttpCodes.BAD_REQUEST,
         message: "Invalid ObjectId",
       });
     }
