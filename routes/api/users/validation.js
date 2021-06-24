@@ -10,6 +10,7 @@ const schemaSignUp = Joi.object({
     .required(),
   password: Joi.string().min(6).required(),
   subscription: Joi.string().optional(),
+  avatarURL: Joi.string().optional(),
 });
 
 const schemaLogIn = Joi.object({
