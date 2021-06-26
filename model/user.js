@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const gravatar = require("gravatar");
 const { Schema, model } = mongoose;
+const uuid = require("uuid").v4;
 const bcrypt = require("bcryptjs");
 const SALT_WORK_FACTOR = 8;
 
@@ -29,6 +30,15 @@ const userSchema = new Schema(
       default: function () {
         return gravatar.url(this.email, { s: "250" }, true);
       },
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verifyToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+      default: uuid(),
     },
   },
   { versionKey: false, timestamps: true }
